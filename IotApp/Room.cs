@@ -31,6 +31,22 @@ namespace IotApp
                     SeatList.Add(new Seat(i,roomNb,false));
                 }
             }
+
+        }
+
+        public void getSeats()
+        {
+            foreach (Seat seat in SeatList)
+            {
+                if (seat.IsAudioDesc)
+                {
+                    Console.WriteLine("Equiped");
+                }
+                else
+                {
+                    Console.WriteLine("Not equiped");
+                }
+            }
         }
 
         
