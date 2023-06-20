@@ -7,50 +7,72 @@ namespace IotApp
     {
         static void Main(string[] args)
         {
-            /*Room salle = new Room(1, 30);
-
-            salle.getSeats();*/
-            string message = "Ceci est une animation de texte style défilement. ";
-            bool isRunning = true;
-
-            // Exécutez le code dans un autre thread pour pouvoir lire les entrées de l'utilisateur
-            Thread thread = new Thread(() =>
-            {
-                while (true)
-                {
-                    if (isRunning)
-                    {
-                        Console.Clear();
-                        Console.WriteLine(message);
-                        message = message[1..] + message[0];
-                    }
-                    Thread.Sleep(200);
-                }
-            });
-
-            // Démarre le thread
-            thread.Start();
+            
 
             while (true)
             {
-                // Si une touche a été pressée
-                if (Console.KeyAvailable)
-                {
-                    // Lit la touche
-                    var key = Console.ReadKey(true).Key;
+                Console.Clear();
+                Console.WriteLine("1er écran :\n1. Entrer dans la salle\n2. Quitter");
+                var input = Console.ReadLine();
 
-                    // Si c'est la touche espace, arrête ou reprend le défilement
-                    if (key == ConsoleKey.Spacebar)
-                    {
-                        isRunning = !isRunning;
-                    }
-                    else if (key == ConsoleKey.Escape) // Si c'est la touche échapper, termine le programme
-                    {
+                switch (input)
+                {
+                    case "1":
+                        Room salle = new Room(1, 30);
+                        DisplaySecondScreen(salle);
+                        break;
+                    case "2":
                         Environment.Exit(0);
-                    }
+                        break;
+                    default:
+                        Console.WriteLine("Option invalide, veuillez réessayer.");
+                        break;
                 }
             }
+        }
 
+        static void DisplaySecondScreen(Room room)
+        {
+            Console.Clear();
+            Console.WriteLine("2eme écran :\n1. Siège classique \n2. Siège audiodesc");
+            var input = Console.ReadLine();
+
+            switch (input)
+            {
+                case "1":
+                    Console.WriteLine("Vous avez choisi le Siège classique. Appuyez sur une touche pour continuer...");
+                    Console.ReadKey();
+                    break;
+                case "2":
+                    Seat? desiredSeat = null;
+                    foreach (var seat in room.SeatList)
+                    {
+                        if (!seat.IsOccupied && seat.IsAudioDesc)
+                        {
+                            desiredSeat = seat;
+                        }
+                        else
+                        {
+                            desiredSeat = null;
+                        }
+                    }
+                    if (desiredSeat == null)
+                    {
+                        Console.WriteLine("Il n'y a pas de siège audio description dans cette salle. Appuyez sur une touche pour continuer...");
+                        Console.ReadKey();
+                        break;
+                    }
+                    else
+                    {
+                        //TODO
+                        Console.WriteLine("OK");
+                        Console.ReadKey();
+                        break;
+                    }
+                default:
+                    Console.WriteLine("Option invalide, veuillez réessayer.");
+                    break;
+            }
         }
     }
 }
