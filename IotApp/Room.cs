@@ -9,26 +9,24 @@ namespace IotApp
     internal class Room
     {
         /*Attribute*/
-        private int deafPeoplePer = 6;
         private int roomId;
-        public int RoomCapacity { get; }
+        public int roomCapacity { get; }
         public List<Seat> SeatList = new List<Seat>();
 
         public Room(int roomNb, int nbSeat)
         {
             roomId = roomNb;
-            RoomCapacity = nbSeat; 
-
+            roomCapacity = nbSeat;
+            int numberOfAudioDescSeat = roomCapacity / 6;
             for (int i = 0; i <= roomNb; i++)
             {
-                //use to determine the number of equiped seats 
-                if (i%deafPeoplePer == 0)
+               if (i < numberOfAudioDescSeat)
                 {
-                    SeatList.Add(new Seat(i,roomNb,true));
+                    SeatList.Add(new Seat(i, roomNb, true));
                 }
-                else
+               else
                 {
-                    SeatList.Add(new Seat(i,roomNb,false));
+                    SeatList.Add(new Seat(i, roomNb, false));
                 }
             }
 
